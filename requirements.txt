@@ -1,0 +1,7 @@
+python-dotenv
+groq
+elasticsearch==8.13.0
+pandas
+scikit-learn
+numpy
+joblib
