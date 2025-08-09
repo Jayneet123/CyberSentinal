@@ -1,0 +1,35 @@
+[
+  {
+    "timestamp": "Aug 4 12:32:45",
+    "source": "sshd",
+    "action": "failed login",
+    "username": "root",
+    "ip_address": "192.168.1.10",
+    "message_summary": "Failed password attempt by root from 192.168.1.10",
+    "original_log": "Aug  4 12:32:45 localhost sshd[12345]: Failed password for root from 192.168.1.10 port 22 ssh2",
+    "threat_score": 0.0,
+    "is_anomaly": false
+  },
+  {
+    "timestamp": "Aug  4 12:32:46",
+    "source": "sshd",
+    "action": "Failed password",
+    "username": "root",
+    "ip_address": "192.168.1.10",
+    "message_summary": "Login attempt failed due to incorrect password",
+    "original_log": "Aug  4 12:32:46 localhost sshd[12345]: Failed password for root from 192.168.1.10 port 22 ssh2",
+    "threat_score": 0.0,
+    "is_anomaly": false
+  },
+  {
+    "timestamp": "Aug  4 12:32:47",
+    "source": "sshd",
+    "action": "accepted",
+    "username": "admin",
+    "ip_address": "10.0.0.2",
+    "message_summary": "Accepted password login from admin from 10.0.0.2",
+    "original_log": "Aug  4 12:32:47 localhost sshd[12345]: Accepted password for admin from 10.0.0.2 port 22 ssh2",
+    "threat_score": 1.0,
+    "is_anomaly": true
+  }
+]
