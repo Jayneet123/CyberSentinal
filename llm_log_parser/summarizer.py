@@ -7,7 +7,7 @@ load_dotenv()
 _JSON_BLOCK = re.compile(r"\{[\s\S]*\}")
 
 SYSTEM_PROMPT = (
-    "You are a cybersecurity log parser. "
+    "You are a cybersecurity log parser. You must respond with valid JSON only. No explanations. No text outside the JSON. "
     "Return ONLY a valid JSON object with keys: timestamp, source, action, username, ip_address, message_summary."
 )
 
