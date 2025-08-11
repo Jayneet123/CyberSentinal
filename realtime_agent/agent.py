@@ -15,7 +15,7 @@ LOG_SOURCE = os.getenv("CS_LOG_SOURCE")
 MODEL_PATH = os.getenv("CS_MODEL_PATH", r"./threat_detection/threat_model.pkl")
 ES_URL = os.getenv("ES_URL", "http://localhost:9200")
 ES_INDEX = os.getenv("ES_INDEX", "scored-log-events")
-THRESHOLD = float(os.getenv("CS_THREAT_THRESHOLD", "0.75"))
+THRESHOLD = float(os.getenv("CS_THREAT_THRESHOLD", "0.60"))
 HIST_JSON = os.getenv("CS_HIST_JSON", r"./llm_log_parser/output/summarized_logs.json")
 
 load_dotenv()
