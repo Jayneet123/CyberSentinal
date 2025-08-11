@@ -3,12 +3,17 @@ from pathlib import Path
 import json
 import pandas as pd
 from dotenv import load_dotenv
+from elasticsearch import Elasticsearch
 
 from llm_log_parser.summarizer import make_groq_client, summarize_log_line
 from threat_detection.model import load_or_new_model, save_model
 from threat_detection.features import FeatureEncoder
 from threat_detection.scorer import fit_if_needed, score_event
 from integrations.elastic import make_es, push_doc
+from threat_response.simulator import simulate_response
+
+# ES connection
+es = Elasticsearch("http://localhost:9200")
 
 # ---- Config ----
 LOG_SOURCE = os.getenv("CS_LOG_SOURCE")
@@ -65,14 +70,24 @@ def worker():
             summary = summarize_log_line(groq_client, line)
             scored, s, is_bad = score_event(model, encoder, summary, threshold=THRESHOLD)
             push_doc(es, ES_INDEX, scored)
+
             if is_bad:
                 print(f"ALERT | score={s:.2f} | user={scored['username']} | ip={scored['ip_address']} | action={scored['action']}")
+                
+                # Layer 4: Response Simulation 
+                from threat_response.simulator import simulate_response
+                response_plan = simulate_response(scored)
+                push_doc(es, "simulated-responses", response_plan)
+                print(f"[RESPONSE] Planned actions: {response_plan['actions']}")
+                
             else:
                 print(f"OK | score={s:.2f} | {scored['message_summary']}")
+
         except Exception as e:
             print(f"Pipeline error: {e}")
         finally:
             q.task_done()
+
 
 if __name__ == "__main__":
     print("CyberSentinel agent starting…")
